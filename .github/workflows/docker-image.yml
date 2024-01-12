@@ -3,11 +3,25 @@ name: Docker Image CI
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      browser:
+        type: choice
+        description: Which browser to test
+        required: true
+        options:
+          - chrome
 
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+    container:
+      image: python:3.10 
+    services:
+      selenium:
+        image: selenium/standalone
+        options: --shm-size=2gb
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -19,42 +33,25 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build . --file Dockerfile --tag myns75/tp_cd
+        run: |
+          docker build . --file Dockerfile --tag myns75/tp_cd
 
-  run_tests:
-    name: Run Tests
-    needs: push_to_registry
-    runs-on: ubuntu-latest
-    container:
-      image: python:3.8
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v4
-
-      - name: Install dependencies and start virtual display
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-          # Install chromedriver
-          CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          mv chromedriver /usr/local/bin/chromedriver
-          rm chromedriver_linux64.zip
+      - name: Start Flask app in the background
+        run: python app.py &
 
-          # Run virtual display using xvfb-run
-          apt-get update
-          apt-get install -y libnss3 libgconf-2-4 libfontconfig1
-          xvfb-run --server-args="-screen 0 1024x768x24" python app.py &
-
-      - name: Run Selenium tests
+      - name: Test with unittest
         run: |
-          # Set up Selenium container and run tests
-          export CHROME_DRIVER_PATH=/usr/local/bin/chromedriver
           python -m unittest test_e2e_app.py
           python -m unittest test-app.py
 
-      - name: Push Docker image if tests pass
-        if: success()
-        run: docker push myns75/tp_cd
+      - name: Stop the Flask app
+        run: pkill -f "python app.py"
+
+      - name: Push Docker image
+        run: |
+          docker push myns75/tp_cd
