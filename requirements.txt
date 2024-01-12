@@ -1,0 +1,4 @@
+flask
+pandas
+unittest2
+selenium
