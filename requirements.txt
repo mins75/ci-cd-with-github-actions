@@ -2,3 +2,5 @@ flask
 pandas
 unittest2
 selenium
+chromedriver-autoinstaller
+pyvirtualdisplay
