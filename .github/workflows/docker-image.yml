@@ -62,7 +62,8 @@ jobs:
   
       - name: Run Selenium tests
         run: |
-          # Run your Selenium tests without Docker
+          # Print Chromedriver version
+          echo "Chromedriver version: $(chromedriver --version)"
           python -m unittest test_e2e_app.py
           python -m unittest test-app.py
           
