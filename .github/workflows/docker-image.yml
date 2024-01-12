@@ -20,7 +20,7 @@ jobs:
       image: python:3.10
     services:
       selenium:
-        image: "selenium/standalone-${{ inputs.browser }}"
+        image: selenium/standalone-chrome:latest
         options: --shm-size=2gb
     steps:
       - name: Check out the repo
