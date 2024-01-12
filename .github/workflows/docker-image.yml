@@ -27,7 +27,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Start virtual display
+
+      - name: Start virtual display and Flask app
         run: |
           sudo apt-get install -y xvfb
           xvfb-run --server-args="-screen 0 1024x768x24" python app.py &
@@ -35,8 +36,10 @@ jobs:
       - name: Run Selenium tests
         run: |
           # Set up Selenium container and run tests
-          python -m unittest test_e2e_app.py
-          python -m unittest test-app.py
+          docker run --rm selenium/standalone-chrome:3.141.59-oxygen python -m unittest test_e2e_app.py
+          docker run --rm selenium/standalone-chrome:3.141.59-oxygen python -m unittest test-app.py
       - name: Push Docker image
         run: |
           docker push myns75/tp_cd
+
+      
