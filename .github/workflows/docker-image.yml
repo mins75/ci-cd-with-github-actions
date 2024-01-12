@@ -51,8 +51,9 @@ jobs:
       - name: Run Selenium tests
         run: |
           # Set up Selenium container and run tests
-          python -m unittest test_e2e_app.py --chrome-driver-path=/usr/local/bin/chromedriver
-          python -m unittest test-app.py --chrome-driver-path=/usr/local/bin/chromedriver
+          export CHROME_DRIVER_PATH=/usr/local/bin/chromedriver
+          python -m unittest test_e2e_app.py
+          python -m unittest test-app.py
 
       - name: Push Docker image if tests pass
         if: success()
