@@ -43,10 +43,8 @@ jobs:
           mv chromedriver /usr/local/bin/chromedriver
           rm chromedriver_linux64.zip
 
-          # Install webdriver_manager
-          pip install webdriver_manager
-
           # Run virtual display using xvfb-run
+          apt-get install -y xvfb
           xvfb-run --server-args="-screen 0 1024x768x24" python app.py &
 
       - name: Run Selenium tests
