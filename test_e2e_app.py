@@ -7,6 +7,8 @@ from selenium.webdriver.common.by import By #Added
 class TestAppE2E(unittest.TestCase):
     def setUp(self):
         # Launch your flask app first
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome() #no need for path
         self.driver.get('http://localhost:5000') 
 
