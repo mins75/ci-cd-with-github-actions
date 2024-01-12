@@ -36,14 +36,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-          # Install chromedriver
-          apt-get update
-          apt-get install -y chromium-chromedriver
-          ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
-
-      - name: Print Chromedriver version
-        run: |
-          echo "Chromedriver version: $(chromedriver --version)"
+          # Install Chromedriver
+          CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          mv chromedriver /usr/local/bin/chromedriver
+          rm chromedriver_linux64.zip
 
       - name: Start virtual display
         run: |
