@@ -3,6 +3,14 @@ name: Docker Image CI
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      browser:
+        type: choice
+        description: Which browser to test
+        required: true
+        options:
+          - chrome
 
 jobs:
   push_to_registry:
@@ -27,12 +35,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt    
           python app.py &
-
-      - name: Install Google Chrome 
-
-        run: |  
-          chmod +x ./scripts/InstallChrome.sh
-                    ./scripts/InstallChrome.sh 
 
       - name: Test with unittest
         run: |
