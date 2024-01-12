@@ -18,11 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: python:3.10 
-    services:
-      selenium:
-        image: selenium/standalone:latest
-        options: --shm-size=2gb
-        ports:
+      ports:
           - 5000:5000
     steps:
       - name: Check out the repo
