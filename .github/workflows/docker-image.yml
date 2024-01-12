@@ -28,15 +28,11 @@ jobs:
           pip install -r requirements.txt    
           python app.py &
 
-      - name: Set up Chrome and ChromeDriver
-        run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP '(?<=Google Chrome )[^ ]+')
-          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+      - name: Install Google Chrome 
 
-          wget "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip" -O chromedriver.zip
-          unzip chromedriver.zip
-          sudo mv chromedriver /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
+        run: |  
+          chmod +x ./scripts/InstallChrome.sh
+                    ./scripts/InstallChrome.sh 
 
       - name: Test with unittest
         run: |
