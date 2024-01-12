@@ -37,28 +37,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install Xvfb
-        run: sudo apt-get install -y xvfb
-
-      - name: Start Xvfb
-        run: Xvfb :99 -ac -screen 0 1024x768x8 &
-
-      - name: Start Flask app in the background
-        run: python app.py &
-
-      - name: Print debugging information
+      - name: Start virtual display
         run: |
-          echo "Checking available display servers:"
-          xdpyinfo -display :99 || true
+          sudo apt-get install -y xvfb
+          xvfb-run --server-args="-screen 0 1024x768x24" python app.py &
 
       - name: Run Selenium tests
         run: |
           # Set up Selenium container and run tests
-          docker run --network host --rm -e DISPLAY=:99 selenium/standalone-chrome python -m unittest test_e2e_app.py
-          docker run --network host --rm -e DISPLAY=:99 selenium/standalone-chrome python -m unittest test-app.py
-
-      - name: Stop the Flask app
-        run: pkill -f "python app.py"
+          docker run --rm -e DISPLAY=:99 selenium/standalone-chrome python -m unittest test_e2e_app.py
+          docker run --rm -e DISPLAY=:99 selenium/standalone-chrome python -m unittest test-app.py
 
       - name: Push Docker image
         run: |
