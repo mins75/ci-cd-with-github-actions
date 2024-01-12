@@ -44,7 +44,8 @@ jobs:
           rm chromedriver_linux64.zip
 
           # Run virtual display using xvfb-run
-          apt-get install -y xvfb
+          apt-get update
+          apt-get install -y libnss3 libgconf-2-4 libfontconfig1
           xvfb-run --server-args="-screen 0 1024x768x24" python app.py &
 
       - name: Run Selenium tests
