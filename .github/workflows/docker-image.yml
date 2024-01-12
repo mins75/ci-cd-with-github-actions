@@ -35,8 +35,8 @@ jobs:
       - name: Run Selenium tests
         run: |
           # Set up Selenium container and run tests
-          docker run --rm selenium/standalone-chrome:3.141.59-oxygen python -m unittest test_e2e_app.py
-          docker run --rm selenium/standalone-chrome:3.141.59-oxygen python -m unittest test-app.py
+          python -m unittest test_e2e_app.py
+          python -m unittest test-app.py
       - name: Push Docker image
         run: |
           docker push myns75/tp_cd
