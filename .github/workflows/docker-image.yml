@@ -31,7 +31,7 @@ jobs:
 
       - name: Start Flask app and run tests in Docker container
         run: |
-          docker run -d -p 5000:5000 --name my-container myns75/tp_cd
+          docker run -d --name my-container myns75/tp_cd
 
           sleep 5
 
