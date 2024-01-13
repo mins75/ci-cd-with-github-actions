@@ -21,14 +21,8 @@ class TestAppE2E(unittest.TestCase):
     
         #selenium_url = "http://selenium:5000/wd/hub" 
         #self.driver = webdriver.Remote(selenium_url, options=chrome_options)
-        desired_capabilities = {
-            "browserName": "chrome",
-            "chromeOptions": {
-                "args": ["--headless"]
-            }
-        }
         
-        self.browser = webdriver.Remote("http://selenium:4444/wd/hub", desired_capabilities)
+        self.browser = webdriver.Remote("http://selenium:4444/wd/hub", DesiredCapabilities.FIREFOX)
 
     
 
@@ -48,7 +42,7 @@ class TestAppE2E(unittest.TestCase):
         self.assertNotIn("Update E2E Item", self.driver.page_source)
 
     def tearDown(self):
-        self.driver.close()
+        self.browser.quit()
 
 if __name__ == '__main__':
     unittest.main()
