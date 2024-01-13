@@ -8,6 +8,11 @@ jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+    services: 
+      selenium:
+        image: selenium/standalone-chrome
+        ports:
+          - 5000:5000
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
