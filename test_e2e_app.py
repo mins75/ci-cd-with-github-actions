@@ -16,9 +16,9 @@ class TestAppE2E(unittest.TestCase):
     #    self.driver = webdriver.Remote("http://127.0.0.1:5000/wd/hub", DesiredCapabilities.CHROME)
     #    self.driver.get('http://localhost:5000') 
     def setUp(self):
-        chrome_options = webdriver.ChromeOptions()
+        chrome_options = webdriver.FirefoxOptions()
         chrome_options.add_argument('--headless')
-        options.add_argument('--disable-blink-features=AutomationControlled')
+        chrome_options.add_argument('--disable-blink-features=AutomationControlled')
         #selenium_url = "http://selenium:5000/wd/hub" 
         self.driver = webdriver.Remote("http://localhost:4444/wd/hub", options=chrome_options)
         
