@@ -12,7 +12,7 @@ class TestAppE2E(unittest.TestCase):
     def setUp(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
-        chrome_options..add_argument('--disable-blink-features=AutomationControlled')
+        chrome_options.add_argument('--disable-blink-features=AutomationControlled')
         self.driver = webdriver.Remote("http://localhost:4444/wd/hub", options=chrome_optinos)
     #    self.driver = webdriver.Chrome(options=chrome_options)
     #    self.driver = webdriver.Remote("http://127.0.0.1:5000/wd/hub", DesiredCapabilities.CHROME)
