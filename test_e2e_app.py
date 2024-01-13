@@ -20,7 +20,7 @@ class TestAppE2E(unittest.TestCase):
         chrome_options.add_argument('--headless')
     
         #selenium_url = "http://selenium:5000/wd/hub" 
-        self.driver = webdriver.Remote("http://selenium:4444/wd/hub", options=chrome_options)
+        self.driver = webdriver.Remote("http://localhost:4444/wd/hub", options=chrome_options)
         
         #self.browser = webdriver.Remote("http://selenium:4444/wd/hub", desired_capabilities = DesiredCapabilities.FIREFOX)
 
