@@ -18,7 +18,7 @@ class TestAppE2E(unittest.TestCase):
     def setUp(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
-    
+        options.add_argument('--disable-blink-features=AutomationControlled')
         #selenium_url = "http://selenium:5000/wd/hub" 
         self.driver = webdriver.Remote("http://localhost:4444/wd/hub", options=chrome_options)
         
@@ -43,6 +43,7 @@ class TestAppE2E(unittest.TestCase):
 
     def tearDown(self):
         self.browser.quit()
+        self.driver.quit()
 
 if __name__ == '__main__':
     unittest.main()
