@@ -23,7 +23,7 @@ jobs:
 
       - name: Start Flask app and run tests in Docker container
         run: |
-          docker run -d -p 8080:5000 --name my-container myns75/tp_cd
+          docker run -d --name my-container myns75/tp_cd
           docker exec my-container python -m pip install --upgrade pip
           docker exec my-container pip install -r requirements.txt
           docker exec my-container python app.py &
