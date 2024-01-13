@@ -4,24 +4,25 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By #Added
 #import chromedriver_autoinstaller
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.firefox.options import Options
+#from selenium.webdriver.firefox.options import Options
 
 #import time
 
 class TestAppE2E(unittest.TestCase):
-    #def setUp(self):
-        # Launch your flask app first
-    #    chrome_options = webdriver.ChromeOptions()
-    #    chrome_options.add_argument('--headless')
+    def setUp(self):
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
+        chrome_options..add_argument('--disable-blink-features=AutomationControlled')
+        self.driver = webdriver.Remote("http://localhost:4444/wd/hub", options=chrome_optinos)
     #    self.driver = webdriver.Chrome(options=chrome_options)
     #    self.driver = webdriver.Remote("http://127.0.0.1:5000/wd/hub", DesiredCapabilities.CHROME)
     #    self.driver.get('http://localhost:5000') 
-    def setUp(self):
-        firefox_options = Options()
-        firefox_options.add_argument('--headless')
-        firefox_options.add_argument('--disable-blink-features=AutomationControlled')
+    #def setUp(self):
+    #    firefox_options = Options()
+    #    firefox_options.add_argument('--headless')
+    #    firefox_options.add_argument('--disable-blink-features=AutomationControlled')
         #selenium_url = "http://selenium:5000/wd/hub" 
-        self.driver = webdriver.Remote("http://localhost:4444/wd/hub", options=firefox_options)
+    #    self.driver = webdriver.Remote("http://localhost:4444/wd/hub", options=firefox_options)
         
         #self.browser = webdriver.Remote("http://selenium:4444/wd/hub", desired_capabilities = DesiredCapabilities.FIREFOX)
 
