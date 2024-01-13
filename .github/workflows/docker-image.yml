@@ -26,9 +26,15 @@ jobs:
           docker run -d --name my-container myns75/tp_cd
           docker exec my-container python -m pip install --upgrade pip
           docker exec my-container pip install -r requirements.txt
-          docker exec my-container python app.py &
+          docker exec -d my-container python app.py
+
+          sleep 5
+
           docker exec my-container python -m unittest test_e2e_app.py
           docker exec my-container python -m unittest test-app.py
+
+          docker exec my-container pkill -f "python app.py"
+
           docker stop my-container
           docker rm my-container
 
