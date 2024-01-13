@@ -16,13 +16,13 @@ class TestAppE2E(unittest.TestCase):
     #    self.driver = webdriver.Remote("http://127.0.0.1:5000/wd/hub", DesiredCapabilities.CHROME)
     #    self.driver.get('http://localhost:5000') 
     def setUp(self):
-        #chrome_options = webdriver.ChromeOptions()
-        #chrome_options.add_argument('--headless')
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
     
         #selenium_url = "http://selenium:5000/wd/hub" 
-        #self.driver = webdriver.Remote(selenium_url, options=chrome_options)
+        self.driver = webdriver.Remote("http://selenium:4444/wd/hub", options=chrome_options)
         
-        self.browser = webdriver.Remote("http://selenium:4444/wd/hub", desired_capabilities = DesiredCapabilities.FIREFOX)
+        #self.browser = webdriver.Remote("http://selenium:4444/wd/hub", desired_capabilities = DesiredCapabilities.FIREFOX)
 
     
 
