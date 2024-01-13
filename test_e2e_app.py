@@ -22,7 +22,7 @@ class TestAppE2E(unittest.TestCase):
         #selenium_url = "http://selenium:5000/wd/hub" 
         #self.driver = webdriver.Remote(selenium_url, options=chrome_options)
         
-        self.browser = webdriver.Remote("http://selenium:4444/wd/hub", DesiredCapabilities.FIREFOX)
+        self.browser = webdriver.Remote("http://selenium:4444/wd/hub", desired_capabilities = DesiredCapabilities.FIREFOX)
 
     
 
