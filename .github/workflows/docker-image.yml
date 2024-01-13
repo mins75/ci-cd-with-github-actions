@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Pull Selenium image with Chrome
-        run: docker pull selenium/node-chrome
+        run: docker pull selenium/node-firefox
 
       - name: Build Docker image
         run: docker build . --file Dockerfile --tag myns75/tp_cd
