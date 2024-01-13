@@ -8,13 +8,20 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 #import time
 
 class TestAppE2E(unittest.TestCase):
-    def setUp(self):
+    #def setUp(self):
         # Launch your flask app first
+    #    chrome_options = webdriver.ChromeOptions()
+    #    chrome_options.add_argument('--headless')
+    #    self.driver = webdriver.Chrome(options=chrome_options)
+    #    self.driver = webdriver.Remote("http://127.0.0.1:5000/wd/hub", DesiredCapabilities.CHROME)
+    #    self.driver.get('http://localhost:5000') 
+    def setUp(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
-        self.driver = webdriver.Chrome(options=chrome_options)
-        #self.driver = webdriver.Remote("http://127.0.0.1:5000/wd/hub", DesiredCapabilities.CHROME)
-        self.driver.get('http://localhost:5000') 
+        selenium_url = "http://127.0.0.1:5000/wd/hub" 
+
+        self.driver = webdriver.Remote(selenium_url, desired_capabilities=chrome_options.to_capabilities())
+        self.driver.get('http://localhost:5000')    
     
 
     def test_add_and_delete_item(self):
