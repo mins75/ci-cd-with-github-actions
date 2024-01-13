@@ -43,8 +43,7 @@ class TestAppE2E(unittest.TestCase):
         self.assertNotIn("Update E2E Item", self.driver.page_source)
 
     def tearDown(self):
-        self.browser.quit()
-        self.driver.quit()
+        self.driver.close()
 
 if __name__ == '__main__':
     unittest.main()
