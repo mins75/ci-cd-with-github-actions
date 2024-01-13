@@ -19,35 +19,18 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: |
-          docker build . --file Dockerfile --tag myns75/tp_cd
+        run: docker build . --file Dockerfile --tag myns75/tp_cd
 
-      - name: Install dependencies
+      - name: Start Flask app and run tests in Docker container
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Download and Install ChromeDriver
-        run: |
-          CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          mv chromedriver /usr/local/bin/chromedriver
-          chmod +x /usr/local/bin/chromedriver
-
-      - name: Start Flask app in the background
-        run: python app.py &
-
-      - name: Test with unittest in Docker container
-        run: |
+          docker run -d -p 5000:5000 --name my-container myns75/tp_cd
+          docker exec my-container python -m pip install --upgrade pip
+          docker exec my-container pip install -r requirements.txt
+          docker exec my-container python app.py &
           docker exec my-container python -m unittest test_e2e_app.py
           docker exec my-container python -m unittest test-app.py
-
-      - name: Stop and remove Docker container
-        run: |
           docker stop my-container
           docker rm my-container
 
       - name: Push Docker image
-        run: |
-          docker push myns75/tp_cd
+        run: docker push myns75/tp_cd
