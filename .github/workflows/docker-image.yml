@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     services: 
       selenium:
-        image: selenium/standalone-chrome
+        image: selenium/standalone-firefox
         ports:
           - 4444:4444
     steps:
