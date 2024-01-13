@@ -18,10 +18,10 @@ class TestAppE2E(unittest.TestCase):
     def setUp(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
-        selenium_url = "http://127.0.0.1:5000/wd/hub" 
-
-        self.driver = webdriver.Remote(selenium_url, desired_capabilities=chrome_options.to_capabilities())
-        self.driver.get('http://localhost:5000')    
+    
+        selenium_url = "http://selenium:4444/wd/hub" 
+        self.driver = webdriver.Remote(selenium_url, options=chrome_options)
+        self.driver.get('http://localhost:5000')
     
 
     def test_add_and_delete_item(self):
