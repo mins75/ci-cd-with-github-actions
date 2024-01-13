@@ -24,7 +24,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Add any additional setup steps here if needed
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run Docker container
         run: docker run -d --name my-container myns75/tp_cd
