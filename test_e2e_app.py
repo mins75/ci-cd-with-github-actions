@@ -3,20 +3,21 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By #Added
 #import chromedriver_autoinstaller
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 #import time
 
 class TestAppE2E(unittest.TestCase):
     def setUp(self):
         # Launch your flask app first
-        chrome_options = webdriver.ChromeOptions()
+        #chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
-        self.driver = webdriver.Chrome(options=chrome_options)
+        #self.driver = webdriver.Chrome(options=chrome_options)
+        self.driver = webdriver.Remote("http://127.0.0.1:5000/wd/hub", DesiredCapabilities.CHROME)
         self.driver.get('http://localhost:5000') 
     
 
     def test_add_and_delete_item(self):
-        #self.driver.get("http://127.0.0.1:5000")
         input_field = self.driver.find_element(By.NAME, "item")
         input_field.send_keys("New E2E Item")
         input_field.send_keys(Keys.RETURN)
