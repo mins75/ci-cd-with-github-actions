@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By #Added
 #import chromedriver_autoinstaller
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.firefox.options import Options
 
 #import time
 
@@ -16,11 +17,11 @@ class TestAppE2E(unittest.TestCase):
     #    self.driver = webdriver.Remote("http://127.0.0.1:5000/wd/hub", DesiredCapabilities.CHROME)
     #    self.driver.get('http://localhost:5000') 
     def setUp(self):
-        chrome_options = webdriver.FirefoxOptions()
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+        firefox_options = Options()
+        firefox_options.add_argument('--headless')
+        firefox_options.add_argument('--disable-blink-features=AutomationControlled')
         #selenium_url = "http://selenium:5000/wd/hub" 
-        self.driver = webdriver.Remote("http://localhost:4444/wd/hub", options=chrome_options)
+        self.driver = webdriver.Remote("http://localhost:4444/wd/hub", options=firefox_options)
         
         #self.browser = webdriver.Remote("http://selenium:4444/wd/hub", desired_capabilities = DesiredCapabilities.FIREFOX)
 
