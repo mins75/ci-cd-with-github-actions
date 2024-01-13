@@ -19,7 +19,7 @@ class TestAppE2E(unittest.TestCase):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
     
-        selenium_url = "http://127.0.0.1:5000/wd/hub" 
+        selenium_url = "http://selenium:5000/wd/hub" 
         self.driver = webdriver.Remote(selenium_url, options=chrome_options)
         self.driver.get('http://localhost:5000')
     
