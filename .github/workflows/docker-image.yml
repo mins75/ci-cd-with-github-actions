@@ -3,16 +3,10 @@ name: Docker Image CI
 on:
   release:
     types: [published]
-
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    services: 
-      selenium:
-        image: selenium/standalone-chrome
-        ports:
-          - 4444:4444
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -24,19 +18,25 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build . --file Dockerfile --tag myns75/tp_cd
-
-      - name: Start Flask app and run tests in Docker container
         run: |
-          docker run -d --name my-container myns75/tp_cd
+          docker build . --file Dockerfile --tag myns75/tp_cd
 
-          sleep 5
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-          docker exec my-container python -m unittest test_e2e_app.py
-          docker exec my-container python -m unittest test-app.py
+      - name: Start Flask app in the background
+        run: python app.py &
 
-          docker stop my-container
-          docker rm my-container
+      - name: Test with unittest
+        run: |
+          python -m unittest test_e2e_app.py
+          python -m unittest test-app.py
+
+      - name: Stop the Flask app
+        run: pkill -f "python app.py"
 
       - name: Push Docker image
-        run: docker push myns75/tp_cd
+        run: |
+          docker push myns75/tp_cd
